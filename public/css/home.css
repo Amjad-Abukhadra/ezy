@@ -1,0 +1,280 @@
+.btn-orange-outline {
+    color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-orange-outline:hover,
+.btn-orange-outline:focus {
+    background-color: #fd7e14;
+    color: white;
+    border-color: #fd7e14;
+}
+
+.btn-orange-solid {
+    background-color: #fd7e14;
+    color: white;
+    border: none;
+}
+
+.btn-orange-solid:hover,
+.btn-orange-solid:focus {
+    background-color: #e06600;
+    /* a darker orange */
+    color: white;
+}
+
+.rounded-0 {
+    border-radius: 0 !important;
+}
+
+.slider-dot {
+    width: 20px;
+    height: 4px;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.slider-dot.active {
+    background-color: #0148A9;
+    width: 40px;
+}
+
+h2.fw-bold {
+    font-size: 3.5rem;
+    line-height: 1.1;
+}
+
+h2.fw-bold .text-blue {
+    color: #0148A9;
+}
+
+h2.fw-bold .text-orange {
+    color: #fd7e14;
+}
+
+.group-2147 {
+    position: absolute;
+    width: 401.88px;
+    height: 106.21px;
+    left: -102px;
+    top: 1200px;
+}
+
+.text-orange {
+    color: #fd7e14 !important;
+}
+
+.text-blue {
+    color: #0148A9 !important;
+}
+
+/* Position and style for Ellipse 3 */
+.how-it-works-ellipse {
+    position: absolute;
+    top: -100px;
+    right: -20px;
+    width: 200px;
+    height: 290px;
+    transform: rotate(177.92deg);
+    z-index: 5;
+}
+
+/* Style for Rectangle 829 background */
+.how-it-works-bg {
+    height: 590px;
+    z-index: 10;
+    position: relative;
+}
+
+/* Updated wrapper for Rectangle 827 with text */
+.how-it-works-header-link {
+    position: absolute;
+    top: -30px;
+    /* moved further up */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+
+    width: 800px;
+    /* bigger width */
+    height: 150px;
+    /* bigger height */
+    text-decoration: none;
+}
+
+/* Updated image inside the header link */
+.how-it-works-header-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+}
+
+/* Updated text inside the header image */
+.how-it-works-header-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 60px;
+    /* larger text */
+    line-height: 70px;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+}
+
+
+/* Group image centered in the section */
+/* Group image centered in the section */
+.how-it-works-group {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.how-it-works-group img {
+    width: 100%;
+    /* reduce size to 80% of container */
+    max-width: 1200px;
+    /* optional: prevent it from getting too large */
+    height: auto;
+}
+
+.achievement-card {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.achievement-card h3 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: #F98149;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-card .icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #303030;
+    margin-bottom: 0;
+}
+
+.achievement-highlight {
+    max-width: 450px;
+    padding: 1.5rem;
+
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+    margin-top: 1rem;
+}
+
+.achievement-highlight h3 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #0148A9;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-highlight p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #303030;
+    margin: 0;
+}
+
+.ornament-img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 180px;
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.trainer-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trainer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.trainer-img {
+    width: 160px;
+    height: 186px;
+    border-radius: 8px;
+}
+
+.ellipse-left {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 100px;
+    z-index: 0;
+}
+
+.best-trainer-crown {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 8px 16px;
+    /* increased padding */
+    font-weight: bold;
+    font-size: 1rem;
+    /* bigger text */
+    background-color: #fd7e14 !important;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.certifications-section {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-weight: 700;
+    color: #1e3a8a;
+    /* example dark blue */
+    font-size: 2rem;
+}
+
+
+
+.cert-img {
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
+.collaboration-img {
+    width: 1385px;
+    height: 162px;
+    object-fit: cover;
+    /* keeps aspect ratio, crops if needed */
+    display: block;
+    margin: 0 auto;
+}
