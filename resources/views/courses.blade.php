@@ -210,15 +210,41 @@
                                 </button>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-warning btn-sm w-100 rounded-pill text-white">
-                                    <i class="fas fa-user-plus me-1"></i> Enroll Now
-                                </button>
+                                <button 
+  class="btn btn-warning btn-sm w-100 rounded-pill text-white" 
+  onclick="enrollCourse(${course.id})">
+  <i class="fas fa-user-plus me-1"></i> Enroll Now
+</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         `;
+            }
+
+            function enrollCourse(courseId) {
+                fetch(`/courses/${courseId}/enroll`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}', // if you use blade rendering inside script tag
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Enrollment successful!');
+                            loadCourses(); // reload courses or update UI as needed
+                        } else if (data.error) {
+                            alert('Error: ' + data.error);
+                        } else {
+                            alert('Unexpected response.');
+                        }
+                    })
+                    .catch(err => alert('Enrollment failed: ' + err.message));
             }
 
             function getStatusInfo(status) {

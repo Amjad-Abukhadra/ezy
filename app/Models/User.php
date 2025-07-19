@@ -21,5 +21,18 @@ class User extends Authenticatable implements LaratrustUser
         'remember_token',
     ];
 
+    public function plans()
+    {
+        return $this->hasMany(UserPlan::class);
+    }
 
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_user')->withTimestamps();
+    }
+
+    public function activePlan()
+    {
+        return $this->hasOne(UserPlan::class)->where('end_date', '>=', now())->latest();
+    }
 }

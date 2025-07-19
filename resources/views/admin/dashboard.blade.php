@@ -24,7 +24,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-6" id="course-card-{{ $course->id }}">
                         <div class="card h-100 shadow-sm">
                             <div
-                                style="height: 180px; background-image: url('{{ $course->photo ? asset('storage/' . $course->photo) : 'https://via.placeholder.com/400x180?text=No+Image' }}'); background-size: cover; background-position: center;">
+                                style="height: 300px; background-image: url('{{ $course->photo ? asset('storage/' . $course->photo) : 'https://via.placeholder.com/400x180?text=No+Image' }}'); background-size: cover; background-position: center;">
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $course->name }}</h5>
@@ -51,10 +51,10 @@
                                         <i class="fa fa-trash"></i> Delete
                                     </button>
 
-                                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#manageCourseModal-{{ $course->id }}">
+                                    <a href="{{ route('admin.courses.manage', $course->id) }}"
+                                        class="btn btn-secondary btn-sm">
                                         <i class="fa fa-cogs"></i> Manage
-                                    </button>
+                                    </a>
                                 </div>
 
                             </div>
@@ -71,7 +71,6 @@
         </div>
 
         @include('admin.create') <!-- your modal include -->
-        @include('admin.manage') <!-- add this line -->
     </section>
 
 

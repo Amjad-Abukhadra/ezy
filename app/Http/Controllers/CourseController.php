@@ -1,12 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\ContentTopic;
-use Illuminate\Http\Request;
+
 use App\Models\Course;
-use App\Models\Project;
-use App\Models\CourseContent;
-use App\Models\Objective;
+
 
 class CourseController extends Controller
 {
@@ -38,47 +35,5 @@ class CourseController extends Controller
         return view('course-page', compact('course'));
     }
 
-    public function saveObjectives(Request $request, $courseId)
-    {
-        $objectives = $request->input('data');
-        // Validate and save each objective to DB
-        foreach ($objectives as $obj) {
-            Objective::updateOrCreate(
-                ['course_id' => $courseId, 'title' => $obj['title']],
-                ['description' => $obj['description']]
-            );
-        }
-        return response()->json(['success' => true]);
-    }
-
-    public function saveProjects(Request $request, $courseId)
-    {
-        $projects = $request->input('data');
-        foreach ($projects as $project) {
-            Project::updateOrCreate(
-                ['course_id' => $courseId, 'title' => $project['title']],
-                ['description' => $project['description']]
-            );
-        }
-        return response()->json(['success' => true]);
-    }
-    public function saveModules(Request $request, Course $course)
-    {
-        $modulesData = $request->input('data', []);
-
-        // Process modules data and save (update/create) in DB linked to $course
-        // Example: loop through $modulesData and save each module
-
-        return response()->json(['success' => true]);
-    }
-
-    public function saveContent(Request $request, Course $course)
-    {
-        $contentData = $request->input('data', []);
-
-        // Process content data similarly
-
-        return response()->json(['success' => true]);
-    }
 
 }

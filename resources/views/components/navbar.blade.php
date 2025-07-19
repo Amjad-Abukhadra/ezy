@@ -18,12 +18,14 @@
             </a>
 
             <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
-            <a href="{{ url('/course-selector') }}" class="nav-link {{ request()->is('course-selector') ? 'active' : '' }}">Course
+            <a href="{{ url('/course-selector') }}"
+                class="nav-link {{ request()->is('course-selector') ? 'active' : '' }}">Course
                 Selector</a>
             <a href="{{ url('/courses') }}" class="nav-link {{ request()->is('courses') ? 'active' : '' }}">Courses</a>
-            <a href="#" class="nav-link {{ request()->is('faq') ? 'active' : '' }}">Pricing</a>
-            <a href="#" class="nav-link {{ request()->is('contact') ? 'active' : '' }}">FAQ</a>
-            <a href="#" class="nav-link {{ request()->is('about') ? 'active' : '' }}">Contact Us</a>
+            <a href="{{ url('/pricing') }}" class="nav-link {{ request()->is('pricing') ? 'active' : '' }}">Pricing</a>
+            <a href="{{ url('/faq') }}" class="nav-link {{ request()->is('faq') ? 'active' : '' }}">FAQ</a>
+            <a href="{{ url('/contact') }}" class="nav-link {{ request()->is('contact') ? 'active' : '' }}">Contact
+                Us</a>
 
 
             @auth
@@ -54,28 +56,3 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#logoutForm').submit(function(e) {
-            e.preventDefault(); // prevent normal submit
-
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                data: $(this).serialize(),
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                },
-                success: function(response) {
-                    if (response.success) {
-                        window.location.href = "{{ url('/login') }}";
-                    }
-                },
-                error: function() {
-                    alert('Logout failed!');
-                }
-            });
-        });
-    });
-</script>

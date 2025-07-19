@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function showRegister()
     {
-        return view('auth.register');
+        return view('register');
     }
 
     public function register(Request $request)
@@ -36,7 +36,7 @@ class AuthController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('login');
     }
 
     public function login(Request $request)
@@ -44,7 +44,21 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/');
+            $user = Auth::user();
+
+            if ($user->hasRole('admin')) {
+                return redirect()->intended('/admin/dashboard');
+            } elseif ($user->hasRole('student')) {
+                return redirect()->intended('/');
+            } elseif ($user->hasRole('trainer')) {
+                return redirect()->intended('/trainer/dashboard'); // Change if needed
+            }
+
+            // Optional fallback
+            Auth::logout();
+            return back()->withErrors([
+                'email' => 'Your role is not authorized.',
+            ]);
         }
 
         return back()->withErrors([
@@ -52,18 +66,14 @@ class AuthController extends Controller
         ])->withInput();
     }
 
+
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('login');
     }
 
-    public function getCourses()
-    {
-        $courses = Course::all();
-        return response()->json($courses);
-    }
 }

@@ -75,52 +75,5 @@
         </div>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#loginForm').submit(function(e) {
-            e.preventDefault(); // Prevent normal submit
 
-            let form = $(this);
-            let url = form.attr('action');
-            let data = form.serialize();
 
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Show success message (optional)
-
-                        // Redirect to homepage '/'
-                        window.location.href = '/';
-                    }
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        let errorHtml = '<div class="alert alert-danger"><ul>';
-
-                        $.each(errors, function(key, messages) {
-                            $.each(messages, function(i, msg) {
-                                errorHtml += '<li>' + msg + '</li>';
-                            });
-                        });
-
-                        errorHtml += '</ul></div>';
-
-                        // Remove old errors and add new errors above form
-                        $('.alert-danger').remove();
-                        form.before(errorHtml);
-                    } else {
-                        alert('An unexpected error occurred.');
-                    }
-                }
-            });
-        });
-    });
-</script>

@@ -38,7 +38,7 @@
                     </div>
                     <h1 class="display-4 fw-bold mb-3">{{ $course->name }}</h1>
                     <h2 class="h3 mb-4">{{ $course->subtitle ?? '' }}</h2>
-                    <div class="badge bg-light bg-opacity-20 text-white px-3 py-2 mb-4">
+                    <div class="badge bg-dark bg-opacity-20 text-white px-3 py-2 mb-4">
                         <i class="bi bi-calendar3"></i>
                         {{ $course->status == 1 ? 'Currently Available' : ($course->status == 2 ? 'Coming Soon' : 'Archived') }}
                     </div>
@@ -46,7 +46,7 @@
                 <div class="col-lg-6">
                     @if ($course->photo)
                         <img src="{{ asset('storage/' . $course->photo) }}" class="img-fluid rounded-3 shadow-lg"
-                            alt="Course Image">
+                            alt="Course Image" style="width: 300px; height: 300px; ">
                     @endif
                 </div>
             </div>
@@ -94,18 +94,11 @@
                                 aria-labelledby="heading{{ $index }}" data-bs-parent="#courseAccordion">
                                 <div class="accordion-body">
                                     <ul class="list-unstyled">
-                                        @php
-                                            // Assuming content->items is stored as JSON array of strings
-                                            $items = json_decode($content->items, true) ?? [];
-                                        @endphp
-
-                                        @forelse ($items as $item)
-                                            <li class="py-1"><i
-                                                    class="bi bi-check-circle text-orange me-2"></i>{{ $item }}
-                                            </li>
-                                        @empty
-                                            <li class="text-muted small">No content items available.</li>
-                                        @endforelse
+                                        @if ($content->description)
+                                            <p class="text-muted">{{ $content->description }}</p>
+                                        @else
+                                            <p class="text-muted small">No content description available.</p>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>

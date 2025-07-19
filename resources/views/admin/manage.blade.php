@@ -1,431 +1,479 @@
-    <!-- admin/manage.blade.php -->
-    @foreach ($courses as $course)
-        <div class="modal fade" id="manageCourseModal-{{ $course->id }}" tabindex="-1"
-            aria-labelledby="manageCourseModalLabel-{{ $course->id }}" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="manageCourseModalLabel-{{ $course->id }}">
-                            <i class="fa fa-cogs me-2"></i>Manage Course: {{ $course->name }}
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Nav tabs -->
-                        <div id="modal-alert" class="alert alert-success d-none" role="alert"></div>
+@extends('admin.app')
 
-                        <ul class="nav nav-tabs" id="courseManageTabs-{{ $course->id }}" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="objectives-tab-{{ $course->id }}"
-                                    data-bs-toggle="tab" data-bs-target="#objectives-{{ $course->id }}" type="button"
-                                    role="tab">
-                                    <i class="fa fa-bullseye me-1"></i>Objectives
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="projects-tab-{{ $course->id }}" data-bs-toggle="tab"
-                                    data-bs-target="#projects-{{ $course->id }}" type="button" role="tab">
-                                    <i class="fa fa-project-diagram me-1"></i>Projects
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="modules-tab-{{ $course->id }}" data-bs-toggle="tab"
-                                    data-bs-target="#modules-{{ $course->id }}" type="button" role="tab">
-                                    <i class="fa fa-layer-group me-1"></i>Modules
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="content-tab-{{ $course->id }}" data-bs-toggle="tab"
-                                    data-bs-target="#content-{{ $course->id }}" type="button" role="tab">
-                                    <i class="fa fa-file-alt me-1"></i>Content
-                                </button>
-                            </li>
-                        </ul>
+@section('title', 'Manage ' . $course->name)
+@section('page_title', 'Manage ' . $course->name)
 
-                        <!-- Tab content -->
-                        <div class="tab-content mt-3" id="courseManageTabContent-{{ $course->id }}">
-
-                            <!-- Objectives Tab -->
-                            <div class="tab-pane fade show active" id="objectives-{{ $course->id }}" role="tabpanel">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h6 class="mb-0">Course Objectives</h6>
-                                    <button type="button" class="btn btn-sm btn-success add-objective-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-plus me-1"></i>Add Objective
-                                    </button>
-                                </div>
-                                <div id="objectives-container-{{ $course->id }}">
-                                    <!-- Dynamic objectives will be added here -->
-                                </div>
-                                <div class="mt-3">
-                                    <button type="button" class="btn btn-primary save-objectives-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-save me-1"></i>Save Objectives
-                                    </button>
+@section('content')
+    <div class="container-fluid py-4">
+        <!-- Course Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-primary text-white shadow rounded-4 border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="me-4">
+                                <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                                    {{ strtoupper(substr($course->name, 0, 1)) }}
                                 </div>
                             </div>
-
-                            <!-- Projects Tab -->
-                            <div class="tab-pane fade" id="projects-{{ $course->id }}" role="tabpanel">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h6 class="mb-0">Course Projects</h6>
-                                    <button type="button" class="btn btn-sm btn-success add-project-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-plus me-1"></i>Add Project
-                                    </button>
-                                </div>
-                                <div id="projects-container-{{ $course->id }}">
-                                    <!-- Dynamic projects will be added here -->
-                                </div>
-                                <div class="mt-3">
-                                    <button type="button" class="btn btn-primary save-projects-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-save me-1"></i>Save Projects
-                                    </button>
-                                </div>
+                            <div>
+                                <h2 class="mb-2 fw-bold">{{ $course->name }}</h2>
+                                <p class="mb-0 opacity-75 fs-5">
+                                    {{ $course->description ?? 'Comprehensive course management dashboard' }}</p>
                             </div>
-
-                            <!-- Modules Tab -->
-                            <div class="tab-pane fade" id="modules-{{ $course->id }}" role="tabpanel">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h6 class="mb-0">Course Modules</h6>
-                                    <button type="button" class="btn btn-sm btn-success add-module-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-plus me-1"></i>Add Module
-                                    </button>
-                                </div>
-                                <div id="modules-container-{{ $course->id }}">
-                                    <!-- Dynamic modules will be added here -->
-                                </div>
-                                <div class="mt-3">
-                                    <button type="button" class="btn btn-primary save-modules-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-save me-1"></i>Save Modules
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Content Tab -->
-                            <div class="tab-pane fade" id="content-{{ $course->id }}" role="tabpanel">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h6 class="mb-0">Course Content</h6>
-                                    <button type="button" class="btn btn-sm btn-success add-content-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-plus me-1"></i>Add Content
-                                    </button>
-                                </div>
-                                <div id="content-container-{{ $course->id }}">
-                                    <!-- Dynamic content will be added here -->
-                                </div>
-                                <div class="mt-3">
-                                    <button type="button" class="btn btn-primary save-content-btn"
-                                        data-course-id="{{ $course->id }}">
-                                        <i class="fa fa-save me-1"></i>Save Content
-                                    </button>
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-    @endforeach
 
-    @push('scripts')
-        <script>
-            
-            document.addEventListener('DOMContentLoaded', function() {
-                // ----------- Objectives (you already have this) -----------
-                // Remove Objective - delegation
-                document.querySelectorAll('[id^="objectives-container-"]').forEach(container => {
-                    container.addEventListener('click', e => {
-                        if (e.target.closest('.remove-objective-btn')) {
-                            e.target.closest('.objective-item').remove();
-                        }
-                    });
-                });
-
-                // Add Objective
-                document.querySelectorAll('.add-objective-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`objectives-container-${courseId}`);
-                        if (!container) return;
-                        const count = container.querySelectorAll('.objective-item').length + 1;
-                        const html = `<div class="card mb-3 objective-item" data-objective-id="${count}">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h6 class="card-title mb-0">Objective ${count}</h6>
-                        <button type="button" class="btn btn-sm btn-danger remove-objective-btn"><i class="fa fa-trash"></i></button>
+        <!-- Management Sections -->
+        <div class="row">
+            <!-- Course Contents Section -->
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow rounded-4 border-0">
+                    <div class="card-header bg-info text-white rounded-top-4 border-0">
+                        <h5 class="mb-0 fw-bold d-flex align-items-center">
+                            <i class="fas fa-book me-2"></i>Course Content
+                        </h5>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control objective-title" placeholder="Enter objective title">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control objective-description" rows="3" placeholder="Enter objective description"></textarea>
-                    </div>
-                </div>
-            </div>`;
-                        container.insertAdjacentHTML('beforeend', html);
-                    });
-                });
-                
-                // Save Objectives
-                document.querySelectorAll('.save-objectives-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`objectives-container-${courseId}`);
-                        if (!container) return;
-
-                        const objectives = [];
-                        container.querySelectorAll('.objective-item').forEach(item => {
-                            const title = item.querySelector('.objective-title').value.trim();
-                            const description = item.querySelector('.objective-description')
-                                .value.trim();
-                            objectives.push({
-                                title,
-                                description
-                            }); // save all, even if empty
-                        });
-
-                        fetch(`/admin/courses/${courseId}/objectives`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector(
-                                        'meta[name="csrf-token"]').content
-                                },
-                                body: JSON.stringify({
-                                    data: objectives
-                                })
-                            }).then(res => res.json())
-                            .then(data => console.log('Objectives saved:', data))
-                            .catch(err => console.error('Save error:', err));
-                    });
-                });
-
-                // ----------- Projects (similar to objectives) -----------
-                document.querySelectorAll('[id^="projects-container-"]').forEach(container => {
-                    container.addEventListener('click', e => {
-                        if (e.target.closest('.remove-project-btn')) {
-                            e.target.closest('.project-item').remove();
-                        }
-                    });
-                });
-
-                document.querySelectorAll('.add-project-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`projects-container-${courseId}`);
-                        if (!container) return;
-                        const count = container.querySelectorAll('.project-item').length + 1;
-                        const html = `<div class="card mb-3 project-item" data-project-id="${count}">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h6 class="card-title mb-0">Project ${count}</h6>
-                        <button type="button" class="btn btn-sm btn-danger remove-project-btn"><i class="fa fa-trash"></i></button>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control project-title" placeholder="Enter project title">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control project-description" rows="3" placeholder="Enter project description"></textarea>
-                    </div>
-                </div>
-            </div>`;
-                        container.insertAdjacentHTML('beforeend', html);
-                    });
-                });
-
-                document.querySelectorAll('.save-projects-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`projects-container-${courseId}`);
-                        if (!container) return;
-
-                        const projects = [];
-                        container.querySelectorAll('.project-item').forEach(item => {
-                            const title = item.querySelector('.project-title').value.trim();
-                            const description = item.querySelector('.project-description').value
-                                .trim();
-                            projects.push({
-                                title,
-                                description
-                            });
-                        });
-
-                        fetch(`/admin/courses/${courseId}/projects`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector(
-                                        'meta[name="csrf-token"]').content
-                                },
-                                body: JSON.stringify({
-                                    data: projects
-                                })
-                            }).then(res => res.json())
-                            .then(data => console.log('Projects saved:', data))
-                            .catch(err => console.error('Save error:', err));
-                    });
-                });
-
-                // ----------- Modules -----------
-                document.querySelectorAll('[id^="modules-container-"]').forEach(container => {
-                    container.addEventListener('click', e => {
-                        if (e.target.closest('.remove-module-btn')) {
-                            e.target.closest('.module-item').remove();
-                        }
-                    });
-                });
-
-                document.querySelectorAll('.add-module-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`modules-container-${courseId}`);
-                        if (!container) return;
-                        const count = container.querySelectorAll('.module-item').length + 1;
-                        const html = `<div class="card mb-3 module-item" data-module-id="${count}">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h6 class="card-title mb-0">Module ${count}</h6>
-                        <button type="button" class="btn btn-sm btn-danger remove-module-btn"><i class="fa fa-trash"></i></button>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label class="form-label">Module Number</label>
-                            <input type="number" class="form-control module-number" placeholder="Module #" value="${count}">
-                        </div>
-                        <div class="col-md-9">
-                            <label class="form-label">Title</label>
-                            <input type="text" class="form-control module-title" placeholder="Enter module title">
+                    <div class="card-body bg-light bg-gradient rounded-bottom-4">
+                        <p class="text-muted mb-4">Manage course modules and learning materials</p>
+                        <!-- Add Content Form -->
+                        <form method="POST" action="{{ route('admin.contents.store', $course) }}" class="mb-4">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Module Number</label>
+                                <input type="number" name="module_number" class="form-control rounded-pill" min="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Module Title</label>
+                                <input type="text" name="title" class="form-control rounded-pill" required placeholder="Enter module title">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Description</label>
+                                <textarea name="description" class="form-control rounded-3" rows="3" placeholder="Brief description of the module"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-info text-white w-100 rounded-pill shadow-sm">
+                                <i class="fas fa-plus me-2"></i>Add Module
+                            </button>
+                        </form>
+                        <!-- Existing Content List -->
+                        <div class="existing-content">
+                            <h6 class="fw-semibold mb-3">Current Modules ({{ $course->contents->count() }})</h6>
+                            @foreach ($course->contents as $content)
+                                <div class="card mb-2 border-left-info shadow-sm rounded-3 card-hover module-item" data-id="{{ $content->id }}">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <span class="badge bg-info mb-1">Module {{ $content->module_number }}</span>
+                                                <h6 class="mb-1 fw-bold">{{ $content->title }}</h6>
+                                                <small class="text-muted">{{ $content->description }}</small>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-1">
+                                                <div class="dropdown me-1">
+                                                    <button class="btn btn-sm btn-outline-secondary rounded-circle" data-bs-toggle="dropdown">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                                    </ul>
+                                                </div>
+                                                <button class="btn btn-sm btn-danger rounded-circle delete-module-btn" data-id="{{ $content->id }}" data-url="{{ route('admin.contents.destroy', [$course, $content]) }}"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <label class="form-label">Content Topics</label>
-                        <textarea class="form-control module-content" rows="3" placeholder="Enter module content topics"></textarea>
+                </div>
+            </div>
+            <!-- Course Objectives Section -->
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow rounded-4 border-0">
+                    <div class="card-header bg-success text-white rounded-top-4 border-0">
+                        <h5 class="mb-0 fw-bold d-flex align-items-center">
+                            <i class="fas fa-target me-2"></i>Learning Objectives
+                        </h5>
+                    </div>
+                    <div class="card-body bg-light bg-gradient rounded-bottom-4">
+                        <p class="text-muted mb-4">Define learning goals and outcomes</p>
+                        <!-- Add Objective Form -->
+                        <form method="POST" action="{{ route('admin.objectives.store', $course) }}" class="mb-4">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Objective Title</label>
+                                <input type="text" name="title" class="form-control rounded-pill" required placeholder="Enter objective title">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Description</label>
+                                <textarea name="description" class="form-control rounded-3" rows="3" placeholder="Describe the learning objective"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100 rounded-pill shadow-sm">
+                                <i class="fas fa-plus me-2"></i>Add Objective
+                            </button>
+                        </form>
+                        <!-- Existing Objectives List -->
+                        <div class="existing-objectives">
+                            <h6 class="fw-semibold mb-3">Current Objectives ({{ $course->objectives->count() }})</h6>
+                            @foreach ($course->objectives as $index => $objective)
+                                <div class="card mb-2 border-left-success shadow-sm rounded-3 card-hover objective-item" data-id="{{ $objective->id }}">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <span class="badge bg-success me-2">{{ $index + 1 }}</span>
+                                                    <h6 class="mb-0 fw-bold">{{ $objective->title }}</h6>
+                                                </div>
+                                                <small class="text-muted">{{ $objective->description }}</small>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-1">
+                                                <div class="dropdown me-1">
+                                                    <button class="btn btn-sm btn-outline-secondary rounded-circle" data-bs-toggle="dropdown">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                                    </ul>
+                                                </div>
+                                                <button class="btn btn-sm btn-danger rounded-circle delete-objective-btn" data-id="{{ $objective->id }}" data-url="{{ route('admin.objectives.destroy', [$course, $objective]) }}"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>`;
-                        container.insertAdjacentHTML('beforeend', html);
-                    });
-                });
-
-                document.querySelectorAll('.save-modules-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`modules-container-${courseId}`);
-                        if (!container) return;
-
-                        const modules = [];
-                        container.querySelectorAll('.module-item').forEach(item => {
-                            const module_number = item.querySelector('.module-number').value
-                                .trim();
-                            const title = item.querySelector('.module-title').value.trim();
-                            const content_topics = item.querySelector('.module-content').value
-                                .trim();
-                            modules.push({
-                                module_number,
-                                title,
-                                content_topics
-                            });
-                        });
-
-                        fetch(`/admin/courses/${courseId}/modules`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector(
-                                        'meta[name="csrf-token"]').content
-                                },
-                                body: JSON.stringify({
-                                    data: modules
-                                })
-                            }).then(res => res.json())
-                            .then(data => console.log('Modules saved:', data))
-                            .catch(err => console.error('Save error:', err));
-                    });
-                });
-
-                // ----------- Content Topics -----------
-                document.querySelectorAll('[id^="content-container-"]').forEach(container => {
-                    container.addEventListener('click', e => {
-                        if (e.target.closest('.remove-content-btn')) {
-                            e.target.closest('.content-item').remove();
-                        }
-                    });
-                });
-
-                document.querySelectorAll('.add-content-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`content-container-${courseId}`);
-                        if (!container) return;
-                        const count = container.querySelectorAll('.content-item').length + 1;
-                        const html = `<div class="card mb-3 content-item" data-content-id="${count}">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h6 class="card-title mb-0">Content ${count}</h6>
-                        <button type="button" class="btn btn-sm btn-danger remove-content-btn"><i class="fa fa-trash"></i></button>
+            </div>
+            <!-- Course Projects Section -->
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow rounded-4 border-0">
+                    <div class="card-header bg-warning text-dark rounded-top-4 border-0">
+                        <h5 class="mb-0 fw-bold d-flex align-items-center">
+                            <i class="fas fa-project-diagram me-2"></i>Course Projects
+                        </h5>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control content-title" placeholder="Enter content title">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Course Content ID</label>
-                        <select class="form-select content-course-id">
-                            <option value="">Select Module</option>
-                            <!-- You may want to populate this dynamically with modules -->
-                        </select>
+                    <div class="card-body bg-light bg-gradient rounded-bottom-4">
+                        <p class="text-muted mb-4">Create hands-on projects and assignments</p>
+                        <!-- Add Project Form -->
+                        <form method="POST" action="{{ route('admin.projects.store', $course) }}" class="mb-4">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Project Title</label>
+                                <input type="text" name="title" class="form-control rounded-pill" required placeholder="Enter project title">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Description</label>
+                                <textarea name="description" class="form-control rounded-3" rows="3" placeholder="Describe the project requirements"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning text-dark w-100 rounded-pill shadow-sm">
+                                <i class="fas fa-plus me-2"></i>Add Project
+                            </button>
+                        </form>
+                        <!-- Existing Projects List -->
+                        <div class="existing-projects">
+                            <h6 class="fw-semibold mb-3">Current Projects ({{ $course->projects->count() }})</h6>
+                            @foreach ($course->projects as $project)
+                                <div class="card mb-2 border-left-warning shadow-sm rounded-3 card-hover project-item" data-id="{{ $project->id }}">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="mb-1 fw-bold"><i class="fas fa-code me-2 text-warning"></i>{{ $project->title }}</h6>
+                                                <small class="text-muted">{{ $project->description }}</small>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-1">
+                                                <div class="dropdown me-1">
+                                                    <button class="btn btn-sm btn-outline-secondary rounded-circle" data-bs-toggle="dropdown">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                                        <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View Details</a></li>
+                                                    </ul>
+                                                </div>
+                                                <button class="btn btn-sm btn-danger rounded-circle delete-project-btn" data-id="{{ $project->id }}" data-url="{{ route('admin.projects.destroy', [$course, $project]) }}"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>`;
-                        container.insertAdjacentHTML('beforeend', html);
+            </div>
+        </div>
+
+        <!-- Quick Stats Row -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow rounded-4 border-0">
+                    <div class="card-header bg-white border-0 rounded-top-4">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-chart-bar me-2 text-primary"></i>Course Statistics</h5>
+                    </div>
+                    <div class="card-body bg-light bg-gradient rounded-bottom-4">
+                        <div class="row text-center g-3">
+                            <div class="col-md-3">
+                                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+                                    <i class="fas fa-book fa-2x text-info mb-2"></i>
+                                    <h4 class="text-info mb-0">{{ $course->contents->count() }}</h4>
+                                    <small class="text-muted">Modules</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+                                    <i class="fas fa-target fa-2x text-success mb-2"></i>
+                                    <h4 class="text-success mb-0">{{ $course->objectives->count() }}</h4>
+                                    <small class="text-muted">Objectives</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+                                    <i class="fas fa-project-diagram fa-2x text-warning mb-2"></i>
+                                    <h4 class="text-warning mb-0">{{ $course->projects->count() }}</h4>
+                                    <small class="text-muted">Projects</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+                                    <i class="fas fa-percentage fa-2x text-primary mb-2"></i>
+                                    @php
+                                        $total = $course->contents->count() + $course->objectives->count() + $course->projects->count();
+                                        $completion = $total > 0 ? round(($total / 15) * 100) : 0;
+                                    @endphp
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="w-100 mb-2">
+                                            <div class="progress" style="height: 12px;">
+                                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{ min($completion, 100) }}%;" aria-valuenow="{{ min($completion, 100) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <span class="fw-bold text-primary">{{ min($completion, 100) }}%</span>
+                                    </div>
+                                    <small class="text-muted">Completion</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .border-left-info {
+            border-left: 4px solid #17a2b8 !important;
+        }
+        .border-left-success {
+            border-left: 4px solid #28a745 !important;
+        }
+        .border-left-warning {
+            border-left: 4px solid #ffc107 !important;
+        }
+        .card-hover:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.13) !important;
+            transition: box-shadow 0.3s;
+        }
+        .card-header {
+            border-bottom: 2px solid rgba(0, 0, 0, 0.07);
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            transition: transform 0.2s;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+            // === Handle Module Submission ===
+            const contentForm = document.querySelector('form[action*="contents"]');
+            contentForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = new FormData(contentForm);
+                const url = contentForm.action;
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: formData
                     });
-                });
-
-                document.querySelectorAll('.save-content-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const courseId = this.dataset.courseId;
-                        const container = document.getElementById(`content-container-${courseId}`);
-                        if (!container) return;
-
-                        const contents = [];
-                        container.querySelectorAll('.content-item').forEach(item => {
-                            const title = item.querySelector('.content-title').value.trim();
-                            const course_content_id = item.querySelector('.content-course-id')
-                                .value.trim();
-                            contents.push({
-                                title,
-                                course_content_id
-                            });
-                        });
-
-                        fetch(`/admin/courses/${courseId}/content`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector(
-                                        'meta[name="csrf-token"]').content
-                                },
-                                body: JSON.stringify({
-                                    data: contents
-                                })
-                            }).then(res => res.json())
-                            .then(data => console.log('Content saved:', data))
-                            .catch(err => console.error('Save error:', err));
-                    });
-                });
+                    const data = await response.json();
+                    if (data.success) {
+                        const container = document.querySelector('.existing-content');
+                        const newCard = document.createElement('div');
+                        newCard.className = 'card mb-2 border-left-info shadow-sm rounded-3 card-hover module-item';
+                        newCard.setAttribute('data-id', data.content.id);
+                        newCard.innerHTML = `
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <span class="badge bg-info mb-1">Module ${data.content.module_number}</span>
+                                    <h6 class="mb-1 fw-bold">${data.content.title}</h6>
+                                    <small class="text-muted">${data.content.description || ''}</small>
+                                </div>
+                                <div class="d-flex align-items-center gap-1">
+                                    <div class="dropdown me-1">
+                                        <button class="btn btn-sm btn-outline-secondary rounded-circle" data-bs-toggle="dropdown">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn btn-sm btn-danger rounded-circle delete-module-btn" data-id="${data.content.id}" data-url="${url.replace('store', 'destroy')}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                        container.prepend(newCard);
+                        contentForm.reset();
+                    } else {
+                        alert('Something went wrong while adding the module.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Error submitting form.');
+                }
             });
-        </script>
-    @endpush
+            // === Handle Objective Submission ===
+            const objectiveForm = document.querySelector('form[action*="objectives"]');
+            objectiveForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = new FormData(objectiveForm);
+                const url = objectiveForm.action;
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: formData
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        const container = document.querySelector('.existing-objectives');
+                        const count = container.querySelectorAll('.card').length + 1;
+                        const newCard = document.createElement('div');
+                        newCard.className = 'card mb-2 border-left-success shadow-sm rounded-3 card-hover objective-item';
+                        newCard.setAttribute('data-id', data.objective.id);
+                        newCard.innerHTML = `
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-success me-2">${count}</span>
+                                        <h6 class="mb-0 fw-bold">${data.objective.title}</h6>
+                                    </div>
+                                    <small class="text-muted">${data.objective.description || ''}</small>
+                                </div>
+                                <div class="d-flex align-items-center gap-1">
+                                    <div class="dropdown me-1">
+                                        <button class="btn btn-sm btn-outline-secondary rounded-circle" data-bs-toggle="dropdown">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn btn-sm btn-danger rounded-circle delete-objective-btn" data-id="${data.objective.id}" data-url="${url.replace('store', 'destroy')}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                        container.prepend(newCard);
+                        objectiveForm.reset();
+                    } else {
+                        alert('Failed to add objective.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Error submitting form.');
+                }
+            });
+            // === Handle Project Submission ===
+            const projectForm = document.querySelector('form[action*="projects"]');
+            projectForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = new FormData(projectForm);
+                const url = projectForm.action;
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: formData
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        const container = document.querySelector('.existing-projects');
+                        const newCard = document.createElement('div');
+                        newCard.className = 'card mb-2 border-left-warning shadow-sm rounded-3 card-hover project-item';
+                        newCard.setAttribute('data-id', data.project.id);
+                        newCard.innerHTML = `
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1 fw-bold"><i class="fas fa-code me-2 text-warning"></i>${data.project.title}</h6>
+                                    <small class="text-muted">${data.project.description || ''}</small>
+                                </div>
+                                <div class="d-flex align-items-center gap-1">
+                                    <div class="dropdown me-1">
+                                        <button class="btn btn-sm btn-outline-secondary rounded-circle" data-bs-toggle="dropdown">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                            <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View Details</a></li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn btn-sm btn-danger rounded-circle delete-project-btn" data-id="${data.project.id}" data-url="${url.replace('store', 'destroy')}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                        container.prepend(newCard);
+                        projectForm.reset();
+                    } else {
+                        alert('Failed to add project.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Error submitting form.');
+                }
+            });
+        });
+
+        // Add instant delete handlers for modules, objectives, and projects
+        function handleInstantDelete(className, itemClass) {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest(className)) {
+                    const btn = e.target.closest(className);
+                    const url = btn.getAttribute('data-url');
+                    const id = btn.getAttribute('data-id');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                    fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        }
+                    }).then(res => {
+                        if (res.ok) {
+                            const item = btn.closest(itemClass);
+                            if (item) item.remove();
+                        }
+                    });
+                }
+            });
+        }
+        handleInstantDelete('.delete-module-btn', '.module-item');
+        handleInstantDelete('.delete-objective-btn', '.objective-item');
+        handleInstantDelete('.delete-project-btn', '.project-item');
+    </script>
+@endsection
+
