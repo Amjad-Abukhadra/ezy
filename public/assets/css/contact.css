@@ -1,0 +1,88 @@
+.hero-section {
+    background: linear-gradient(135deg, #ff7043 0%, #ff9966 100%);
+    min-height: 40vh;
+    border-bottom-left-radius: 200px;
+    border-bottom-right-radius: 200px;
+}
+
+.dot-pattern {
+    left: 5%;
+    bottom: 10%;
+    opacity: 0.3;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+}
+
+.navbar.bg-white {
+    background: linear-gradient(135deg, #ff6b35 0%, #f4a261 100%);
+    color: white !important;
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.input-style {
+    border-color: #e9ecef;
+    background: #fff;
+}
+
+.textarea-style {
+    resize: vertical;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #ff7043;
+    box-shadow: 0 0 0 0.2rem rgba(255, 112, 67, 0.15);
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #ff7043 0%, #ff9966 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 112, 67, 0.4) !important;
+}
+
+.contact-icon {
+    width: 60px;
+    height: 60px;
+}
+
+.icon-size {
+    font-size: 24px;
+}
+
+.bg-blue {
+    background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+}
+
+.bg-orange {
+    background: linear-gradient(135deg, #ff7043 0%, #ff5722 100%);
+}
+
+.card {
+    transition: all 0.3s ease;
+
+}
+
+.card-shift {
+    transform: translateY(-130px);
+}
+
+@media (max-width: 768px) {
+    .card-shift {
+        transform: translateY(-30px) !important;
+    }
+}

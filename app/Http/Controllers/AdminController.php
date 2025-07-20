@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Project;
 use App\Models\CourseContent;
 use App\Models\Objective;
+use App\Models\Contact;
+
 class AdminController extends Controller
 {
     public function showDashboard()
@@ -183,6 +185,9 @@ class AdminController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function showMessages()
+    {
+        $messages = Contact::orderBy('created_at', 'desc')->get();
+        return view('admin.message', compact('messages'));
+    }
 }
-
-

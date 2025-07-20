@@ -43,6 +43,9 @@
                             <a href="{{ route('admin.dashboard') }}" class="btn btn-bg btn-outline-light">
                                 Dashboard
                             </a>
+                            <a href="{{ route('admin.message') }}" class="btn btn-bg btn-outline-light">
+                                Messages
+                            </a>
                             <form method="POST" action="{{ route('logout') }}" id="logoutForm"
                                 style="display: inline;">
                                 @csrf
@@ -98,52 +101,6 @@
     <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
 
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
-    <!-- Modal stacking script (vanilla JS) -->
-    <script>
-        $(document).ready(function() {
-            $(document).on('show.bs.modal', '.modal', function() {
-                const openModals = $('.modal.show').not(this);
-                if (openModals.length > 0) {
-                    let highestZIndex = 1050;
-                    openModals.each(function() {
-                        const z = parseInt($(this).css('z-index')) || 1050;
-                        if (z > highestZIndex) highestZIndex = z;
-                    });
-                    $(this).css('z-index', highestZIndex + 10);
-
-                    setTimeout(() => {
-                        $('.modal-backdrop.show').each(function() {
-                            const z = parseInt($(this).css('z-index')) || 1040;
-                            if (z < highestZIndex + 9) {
-                                $(this).css('z-index', highestZIndex + 9);
-                            }
-                        });
-                    }, 0);
-                }
-            });
-
-            $(document).on('hidden.bs.modal', '.modal', function() {
-                const id = $(this).attr('id') || '';
-                if (id.startsWith('addContentModal-') || id.startsWith('addObjectiveModal-') || id
-                    .startsWith('addProjectModal-')) {
-                    const courseId = id.split('-').pop();
-                    const manageModal = $(`#manageCourseModal-${courseId}`);
-
-                    if (manageModal.length) {
-                        // If manage modal is hidden, show it again
-                        if (!manageModal.hasClass('show')) {
-                            const manageModalInstance = bootstrap.Modal.getOrCreateInstance(manageModal[0]);
-                            manageModalInstance.show();
-                        }
-
-                        // Remove any extra backdrops that might block the UI
-                        $('.modal-backdrop').not(':last').remove();
-                    }
-                }
-            });
-        });
-    </script>
 
     @stack('scripts')
 </body>

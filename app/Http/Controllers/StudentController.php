@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Plan;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Plan;
+use App\Models\UserPlan;
 use App\Models\Contact;
-
 use App\Models\Course;
+use Carbon\Carbon;
+
 class StudentController extends Controller
 {
 
@@ -56,39 +59,95 @@ class StudentController extends Controller
 
         return redirect()->back()->with('success', 'Plan selected successfully!');
     }
+    
     public function enroll(Course $course)
     {
         $user = Auth::user();
 
-        // Check active plan and course limit
-        $activePlan = $user->activePlan; // assumes you have this relation
+        $activePlan = $user->activePlan;
+
         if (!$activePlan) {
-            return redirect()->back()->with('error', 'You need to select a plan first.');
+            return response()->json([
+                'error' => 'You need to purchase a plan before enrolling.'
+            ], 403);
         }
 
-        $planLimits = [
-            1 => 6,
-            2 => 12,
-            3 => 16,
-        ];
-
-        $limit = $planLimits[$activePlan->plan_id] ?? 0;
-
-        // Count user enrollments
-        $enrollCount = $user->courses()->count(); // assuming many-to-many user-courses relation
-
-        if ($enrollCount >= $limit) {
-            return redirect()->back()->with('error', 'You have reached your enrollment limit for your plan.');
+        $plan = Plan::find($activePlan->plan_id);
+        if (!$plan) {
+            return response()->json([
+                'error' => 'Your plan is invalid or missing.'
+            ], 400);
         }
 
-        // Check if already enrolled
+        $courseLimit = $plan->course_limit;
+
+        $enrollCount = $user->courses()->count();
+
+        if ($enrollCount >= $courseLimit) {
+            return response()->json([
+                'error' => 'You have reached your course enrollment limit for your current plan.'
+            ], 403);
+        }
+
         if ($user->courses()->where('course_id', $course->id)->exists()) {
-            return redirect()->back()->with('error', 'You are already enrolled in this course.');
+            return response()->json([
+                'error' => 'You are already enrolled in this course.'
+            ], 409);
         }
 
-        // Enroll the user
         $user->courses()->attach($course->id);
 
-        return redirect()->back()->with('success', 'You have successfully enrolled in the course!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Enrollment successful!'
+        ]);
+    }
+
+
+
+    public function buyPlan(Request $request)
+    {
+        $request->validate([
+            'plan_id' => 'required|exists:plans,id',
+        ]);
+
+        $userId = Auth::id();
+
+        // Get the plan user wants to buy
+        $newPlan = Plan::findOrFail($request->plan_id);
+
+        // Get current active plan (if any)
+        $currentPlan = UserPlan::where('user_id', $userId)
+            ->where('end_date', '>', Carbon::now())
+            ->latest('end_date')
+            ->first();
+
+        if ($currentPlan) {
+            $currentPlanDetails = Plan::find($currentPlan->plan_id);
+
+            if ($currentPlan->plan_id == $newPlan->id) {
+                return redirect()->back()->with('error', 'You already have this plan active.');
+            }
+
+            // Check if the new plan price is less than current — downgrade NOT allowed
+            if ($newPlan->price < $currentPlanDetails->price) {
+                return redirect()->back()->with('error', 'Downgrade not allowed. You can only upgrade your plan.');
+            }
+
+            // Optional: You may want to expire current plan immediately or keep both
+            // Here, let's expire current plan immediately before adding new one
+            $currentPlan->end_date = Carbon::now();
+            $currentPlan->save();
+        }
+
+        // Create new UserPlan record for the new plan
+        $userPlan = new UserPlan();
+        $userPlan->user_id = $userId;
+        $userPlan->plan_id = $newPlan->id;
+        $userPlan->start_date = Carbon::now();
+        $userPlan->end_date = Carbon::now()->addDays(30);
+        $userPlan->save();
+
+        return redirect()->back()->with('success', 'Plan purchased successfully!');
     }
 }

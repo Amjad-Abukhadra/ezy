@@ -37,9 +37,8 @@
                 <!-- Gear icon that logs out on click -->
                 <form method="POST" action="{{ route('logout') }}" id="logoutForm" style="display: inline;">
                     @csrf
-                    <button type="submit" class="btn btn-outline-secondary p-0" title="Logout"
-                        style="border: none; background: transparent;">
-                        <i class="bi bi-gear-fill fs-4 text-dark"></i>
+                    <button type="submit" class="btn btn-dark btn-sm" title="Logout">
+                        Logout
                     </button>
                 </form>
             @else
@@ -53,6 +52,3 @@
         </div>
     </div>
 </nav>
-
-
-

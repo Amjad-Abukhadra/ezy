@@ -75,48 +75,7 @@
 
 
 @endsection
-@push('scripts')
-    <script>
-        // Optionally, you can reset the modal form on close
-        const createCourseModal = document.getElementById('createCourseModal');
-        createCourseModal.addEventListener('hidden.bs.modal', () => {
-            createCourseModal.querySelector('form').reset();
-        });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.delete-course-btn').forEach(button => {
-                button.addEventListener('click', e => {
-                    e.preventDefault();
-
-                    const courseId = button.dataset.courseId;
-
-                    fetch(`/admin/courses/${courseId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        .then(response => {
-                            if (!response.ok) throw new Error('Delete failed');
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                const courseCard = document.getElementById(
-                                    `course-card-${courseId}`);
-                                if (courseCard) courseCard.remove();
-                            }
-                        })
-                        .catch(err => {
-                            console.error(err);
-                        });
-                });
-            });
-        });
-    </script>
-@endpush
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', () => {

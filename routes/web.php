@@ -31,7 +31,7 @@ Route::middleware(['role:student'])->group(function () {
     Route::get('/pricing', [StudentController::class, 'showPricing'])->name('pricing');
     Route::post('/select-plan/{id}', [StudentController::class, 'selectPlan'])->name('select.plan');
     Route::post('/courses/{course}/enroll', [StudentController::class, 'enroll'])->name('courses.enroll');
-
+    Route::post('/buy-plan', [StudentController::class, 'buyPlan'])->name('user_plans.store');
 });
 
 
@@ -53,9 +53,5 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         ->name('admin.objectives.destroy');
     Route::delete('/admin/courses/{course}/projects/{project}', [AdminController::class, 'destroyProject'])
         ->name('admin.projects.destroy');
+    Route::get('/message', [AdminController::class, 'showMessages'])->name('admin.message');
 });
-
-
-
-
-
