@@ -1,10 +1,21 @@
 .navbar.bg-white {
-background: linear-gradient(135deg, #ff6b35 0%, #f4a261 100%);    /* or any blue shade you prefer */
-    color: white !important;
+    background: linear-gradient(135deg, #ff6b35 0%, #f4a261 100%);
+    /* or any blue shade you prefer */
+
 }
 
 .navbar .nav-link {
+    color: black !important;
+}
+
+.nav-link:hover {
     color: white !important;
+}
+
+.nav-link.active {
+    color: white !important;
+    font-weight: 600;
+    /* optional to highlight */
 }
 
 .faq-header {

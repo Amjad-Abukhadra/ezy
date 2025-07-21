@@ -59,7 +59,7 @@ class StudentController extends Controller
 
         return redirect()->back()->with('success', 'Plan selected successfully!');
     }
-    
+
     public function enroll(Course $course)
     {
         $user = Auth::user();
@@ -150,4 +150,24 @@ class StudentController extends Controller
 
         return redirect()->back()->with('success', 'Plan purchased successfully!');
     }
+    public function studentCourses()
+    {
+        $user = Auth::user();
+
+        $courses = Course::all();
+
+        $activePlan = UserPlan::where('user_id', $user->id)
+            ->where('end_date', '>', now())
+            ->whereColumn('start_date', '<', 'end_date')
+            ->latest('start_date')
+            ->first();
+
+        $planData = $activePlan ? Plan::find($activePlan->plan_id) : null;
+
+        $enrolledCourseIds = $user->courses()->pluck('course_id')->toArray();
+
+        return view('mycourses', compact('courses', 'planData', 'activePlan', 'enrolledCourseIds'));
+
+    }
+
 }

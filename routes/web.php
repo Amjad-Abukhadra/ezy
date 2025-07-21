@@ -31,7 +31,11 @@ Route::middleware(['role:student'])->group(function () {
     Route::get('/pricing', [StudentController::class, 'showPricing'])->name('pricing');
     Route::post('/select-plan/{id}', [StudentController::class, 'selectPlan'])->name('select.plan');
     Route::post('/courses/{course}/enroll', [StudentController::class, 'enroll'])->name('courses.enroll');
-    Route::post('/buy-plan', [StudentController::class, 'buyPlan'])->name('user_plans.store');
+    Route::post('/buy-plan', action: [StudentController::class, 'buyPlan'])->name('user_plans.store');
+    Route::get('/my-courses', [StudentController::class, 'studentCourses'])->name('student.mycourses');
+    Route::get('/about', function () {
+        return view('about');
+    });
 });
 
 

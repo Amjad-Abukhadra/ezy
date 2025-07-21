@@ -85,47 +85,4 @@
     </div>
     <div id="formMessage" class="mt-3"></div>
 
-    <script>
-        $(document).ready(function() {
-            $('#registerForm').submit(function(e) {
-                e.preventDefault();
-
-                let form = $(this);
-                let url = form.attr('action');
-                let token = $('input[name="_token"]').val();
-
-                $.ajax({
-                    url: url,
-                    method: 'POST',
-                    data: form.serialize(),
-                    headers: {
-                        'X-CSRF-TOKEN': token
-                    },
-                    success: function(response) {
-                        $('#formMessage').html(
-                            '<div class="alert alert-success">Registration successful! Redirecting...</div>'
-                        );
-                        // Redirect after a short delay
-                        setTimeout(function() {
-                            window.location.href = "{{ url('/') }}";
-                        }, 1500);
-                    },
-                    error: function(xhr) {
-                        let errors = xhr.responseJSON.errors;
-                        let errorHtml = '<div class="alert alert-danger"><ul>';
-
-                        $.each(errors, function(key, value) {
-                            errorHtml += '<li>' + value[0] + '</li>';
-                        });
-
-                        errorHtml += '</ul></div>';
-                        $('#formMessage').html(errorHtml);
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
 @endsection

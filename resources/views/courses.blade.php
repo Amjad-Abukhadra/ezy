@@ -52,6 +52,12 @@
                         <li class="nav-item">
                             <a class="nav-link px-4 py-3 mx-1 rounded-pill" href="#" data-filter="3">Archived</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-4 py-3 mx-1 rounded-pill" href="{{ route('student.mycourses') }}">My
+                                Courses</a>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>

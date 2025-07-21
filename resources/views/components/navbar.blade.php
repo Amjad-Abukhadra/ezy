@@ -1,10 +1,10 @@
 <style>
     .nav-link:hover {
-        color: #fd7e14 !important;
+        color: #fd7e14 ;
     }
 
     .nav-link.active {
-        color: #fd7e14 !important;
+        color: #fd7e14 ;
         font-weight: 600;
         /* optional to highlight */
     }

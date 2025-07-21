@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -36,4 +37,5 @@ class CourseController extends Controller
     }
 
 
+    
 }

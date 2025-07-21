@@ -1,60 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Pricing Section -->
     <div class="pricing-section">
         @if (session('success'))
-            <div class="alert alert-success text-center my-3">{{ session('success') }}</div>
+            <div class="alert alert-primary text-center my-3">{{ session('success') }}</div>
         @endif
 
         @if (session('error'))
-            <div class="alert alert-danger text-center my-3">{{ session('error') }}</div>
+            <div class="alert alert-primary text-center my-3">{{ session('error') }}</div>
         @endif
+
         <!-- Decorative elements -->
-        <div class="decorative-dots dots-left"></div>
-        <div class="decorative-dots dots-right"></div>
+        <div class="decoration decoration-left"></div>
+        <div class="decoration decoration-right"></div>
 
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center py-5">
-                    <h1 class="display-4 font-weight-bold mb-2 text-white">
-                        Our <span style="color: peru">Pricing</span>
-                    </h1>
-                </div>
-            </div>
+            <h2 class="pricing-title">Our <span>Pricing</span></h2>
 
-            <div class="row justify-content-center align-items-stretch pb-5">
-
+            <div class="pricing-cards">
                 @foreach ($plans as $plan)
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="pricing-card h-100">
-                            <div class="pricing-header">
-                                <h3 class="plan-name">{{ $plan->name }}</h3>
-                                <div class="plan-price">₹{{ number_format($plan->price) }}</div>
-                                <p class="plan-period">per month</p>
-                            </div>
-                            <div class="pricing-body">
-                                <ul class="feature-list">
-                                    <li class="feature-item">
-                                        @if ($plan->course_limit == 0)
-                                            Unlimited Users
-                                        @else
-                                            Up to {{ $plan->course_limit }} Users
-                                        @endif
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="pricing-footer">
-                                <form action="{{ route('user_plans.store') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="plan_id" value="{{ $plan->id }}">
-                                    <button type="submit" class="btn btn-pricing">Get Started</button>
-                                </form>
-                            </div>
+                    <div class="pricing-card {{ $loop->index === 1 ? 'featured' : '' }}">
+                        <div class="card-header">{{ $plan->name }}</div>
+                        <div class="price">₹{{ number_format($plan->price) }} <span style="font-size: 16px;">+ Tax</span>
                         </div>
+                        <div class="price-subtitle">(Exclusive of GST & Tax)</div>
+
+                        <ul class="features">
+                            <li>
+                                @if ($plan->course_limit == 0)
+                                    Unlimited Users
+                                @else
+                                    Up to {{ $plan->course_limit }} Users
+                                @endif
+                            </li>
+                        </ul>
+
+                        <form action="{{ route('user_plans.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                            <button type="submit" class="choose-btn">Choose Plan</button>
+                        </form>
+
+                        <div style="margin-top: 15px; font-size: 12px; opacity: 0.7;">Afterpay</div>
                     </div>
                 @endforeach
-
             </div>
         </div>
     </div>

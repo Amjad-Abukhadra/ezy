@@ -22,7 +22,17 @@
 }
 
 .navbar .nav-link {
+    color: black !important;
+}
+
+.nav-link:hover {
     color: white !important;
+}
+
+.nav-link.active {
+    color: white !important;
+    font-weight: 600;
+    /* optional to highlight */
 }
 
 .input-style {
@@ -84,5 +94,21 @@
 @media (max-width: 768px) {
     .card-shift {
         transform: translateY(-30px) !important;
+    }
+    
+    .hero-section {
+        border-bottom-left-radius: 6vw; /* smaller radius on small devices */
+        border-bottom-right-radius: 6vw;
+        padding: 1rem;
+    }
+
+    .submit-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .contact-icon {
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }
